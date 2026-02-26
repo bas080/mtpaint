@@ -8,7 +8,6 @@
   "content_warnings": [],
   "license": "WTFPL",
   "media_license": "WTFPL",
-  "long_description": "mtpaint is a Minetest mod created by bas080 that allows players to draw, erase, fill, and edit textures directly within the game. It includes basic painting tools and supports working on nodes and world blocks.",
   "repo": "https://github.com/bas080/mtpaint",
   "issue_tracker": "https://github.com/bas080/mtpaint/issues"
 }
