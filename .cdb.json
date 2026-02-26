@@ -5,7 +5,6 @@
   "short_description": "A Minetest mod providing in-game painting and editing tools.",
   "dev_state": "AS_IS",
   "ai_disclosure": "ASSISTED",
-  "tags": ["painting", "tools", "editor"],
   "content_warnings": [],
   "license": "WTFPL",
   "media_license": "WTFPL",
