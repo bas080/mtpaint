@@ -202,7 +202,7 @@ register_mtpaint_point_tool({
 register_mtpaint_point_tool({
     name = "additive_fill",
     description = "3D Flood Fill",
-    inventory_image = "paint_fill.png",
+    inventory_image = "paint_additive_fill.png",
     action = function(set_node, pointed_thing, user, right_click)
         -- aux1 now replaces the entire connected component instead of scanning the whole world
         perform_fill(set_node, pointed_thing, user, { plane_only = false, aux1_mode = "replace_component" })
