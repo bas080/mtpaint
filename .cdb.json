@@ -1,15 +1,15 @@
 {
-  "type": "MOD",
-  "title": "mtpaint",
-  "name": "mtpaint",
-  "author": "bas080",
-  "short_description": "A Minetest mod providing in-game painting and editing tools.",
-  "dev_state": "AS_IS",
-  "ai_disclosure": "ASSISTED",
-  "content_warnings": [],
-  "license": "WTFPL",
-  "forum": 5674,
-  "media_license": "WTFPL",
-  "repo": "https://github.com/bas080/mtpaint",
-  "issue_tracker": "https://github.com/bas080/mtpaint/issues"
+   "ai_disclosure" : "ASSISTED",
+   "author" : "bas080",
+   "content_warnings" : [],
+   "dev_state" : "AS_IS",
+   "forum" : 5674,
+   "issue_tracker" : "https://github.com/bas080/mtpaint/issues",
+   "license" : "LGPL-2.1",
+   "media_license" : "CC0",
+   "name" : "mtpaint",
+   "repo" : "https://github.com/bas080/mtpaint",
+   "short_description" : "A Minetest mod providing in-game painting and editing tools.",
+   "title" : "mtpaint",
+   "type" : "MOD"
 }
