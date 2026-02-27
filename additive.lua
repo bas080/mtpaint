@@ -15,7 +15,7 @@ local function ellipse_fill_additive(itemstack,user,pointed_thing,slot)
     ellipse_selections[pname].corner1 = nil
 
     local dx, dy, dz = pointed_thing.above.x-pos1.x, pointed_thing.above.y-pos1.y, pointed_thing.above.z-pos1.z
-    local shift = user:get_player_control().sneak
+    local modifier = user:get_player_control().aux1
     local plane_axes, fixed_axis = {}, {}
     if dy ~= 0 then plane_axes = {"x","z"} fixed_axis.axis="y" fixed_axis.value=pos1.y
     elseif dx ~= 0 then plane_axes = {"y","z"} fixed_axis.axis="x" fixed_axis.value=pos1.x
@@ -37,7 +37,7 @@ local function ellipse_fill_additive(itemstack,user,pointed_thing,slot)
                 pos[plane_axes[2]] = b
                 pos[fixed_axis.axis] = fixed_axis.value
 
-                if not shift then
+                if not modifier then
                     local normal = fixed_axis.axis
                     while core.get_node(pos).name ~= "air" and pos[normal] < 31000 do
                         pos[normal] = pos[normal]+1
@@ -72,13 +72,13 @@ local function rect_fill_additive(itemstack, user, pointed_thing, slot)
 
     local minp, maxp = minmax_pos(c1, c2)
 
-    local shift = user:get_player_control().sneak
+    local modifier = user:get_player_control().aux1
 
     for x=minp.x,maxp.x do
         for y=minp.y,maxp.y do
             for z=minp.z,maxp.z do
                 local pos = {x=x,y=y,z=z}
-                if not shift then
+                if not modifier then
                     local normal = "y"
                     while core.get_node(pos).name ~= "air" and pos[normal] < 31000 do
                         pos[normal] = pos[normal]+1
@@ -103,7 +103,7 @@ local function fill_on_use_additive(itemstack, user, pointed_thing, slot)
     local queue = {under}
     local to_replace = {}
     local radius = 10
-    local full_plane = user:get_player_control().sneak
+    local full_plane = user:get_player_control().aux1
 
     local function pos_hash(pos)
         return pos.x..","..pos.y..","..pos.z
@@ -140,11 +140,11 @@ local function fill_on_use_additive(itemstack, user, pointed_thing, slot)
     end
 
     -- Second pass: replace nodes
-    local shift = user:get_player_control().sneak
+    local modifier = user:get_player_control().aux1
     for _, pos in ipairs(to_replace) do
         local target_pos = {x=pos.x, y=pos.y, z=pos.z}
-        if shift and replacer ~= "air" then
-            -- non-shift = place on top of existing
+        if modifier and replacer ~= "air" then
+            -- aux1 = place on top of existing
             while core.get_node(target_pos).name ~= "air" and target_pos.y < 31000 do
                 target_pos.y = target_pos.y + 1
             end
