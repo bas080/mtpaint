@@ -74,7 +74,7 @@ Use the `/give` command (or `/giveme`) to obtain them:
 
 ### Aliases
 
-The following shortcuts are available:
+The following shortcuts are available for use with `/giveme <alias>`
 
 * `pencil`
 * `fill`
@@ -85,8 +85,6 @@ The following shortcuts are available:
 * `colorpicker`
 * `nodepicker`
 
-Example:
+See [`experiment branch`][experiment_branch] for other ideas
 
-```
-/give <player> pencil
-```
+[experiment_branch]:https://github.com/bas080/mtpaint/tree/experiment
