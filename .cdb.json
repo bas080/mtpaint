@@ -2,6 +2,7 @@
   "type": "MOD",
   "title": "mtpaint",
   "name": "mtpaint",
+  "author": "bas080",
   "short_description": "A Minetest mod providing in-game painting and editing tools.",
   "dev_state": "AS_IS",
   "ai_disclosure": "ASSISTED",
