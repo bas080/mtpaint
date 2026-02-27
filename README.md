@@ -1,6 +1,6 @@
 # MtPaint
 
-Image editor–style world editing for Minetest.
+Image editor-style world editing for Minetest.
 
 > Built with AI assistance
 
