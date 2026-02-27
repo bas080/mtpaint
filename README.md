@@ -32,6 +32,10 @@ Image editor–style world editing for Minetest.
 
   * Fills connected blocks on the clicked face
 
+* **3D Flood Fill / Additive Fill**
+
+  * Fills a six‑connected component of identical nodes in true 3D space. Click to replace a block and all connected neighbors; use the `aux1` modifier to surround the region with a one‑node thick shell (nodes are placed on top of the replaced component). This tool is not restricted to a plane and therefore differs from the regular flood fill, which only affects the face you click and works by placing nodes on adjacent faces.
+
 * **Filled Box**
 
   * 2-corner selection volume fill
@@ -61,6 +65,7 @@ Use the `/give` command (or `/giveme`) to obtain them:
 /give <player> mtpaint:fill
 /give <player> mtpaint:eraser
 /give <player> mtpaint:picker
+/give <player> mtpaint:additive_fill   # 3D flood fill tool
 /give <player> mtpaint:rect_fill
 /give <player> mtpaint:rect_edge
 /give <player> mtpaint:ellipse_fill
