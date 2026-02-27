@@ -251,7 +251,11 @@ register_mtpaint_point_tool({
             local neighbor = { x = pos.x + normal.x, y = pos.y + normal.y, z = pos.z + normal.z }
             return can_replace(neighbor)
         end
-        perform_fill(set_node, pointed_thing, user, { plane_only = true, predicate = predicate, aux1_mode = "place_face" })
+        perform_fill(set_node, pointed_thing, user, {
+            plane_only = true,
+            predicate = predicate,
+            aux1_mode = "place_face"
+        })
     end
 })
 
