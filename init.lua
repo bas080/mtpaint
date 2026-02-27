@@ -41,6 +41,88 @@ local function can_replace(pos)
     return def and def.buildable_to
 end
 
+-- Shared fill helper
+local function perform_fill(set_node, pointed_thing, user, opts)
+    opts = opts or {}
+    local under = pointed_thing.under
+    local above = pointed_thing.above
+    local modifier = user:get_player_control().aux1
+    local clicked = core.get_node(under).name
+    if not clicked or clicked == "ignore" then return end
+
+    -- aux1 replace_component: handled by the BFS below (connected component),
+    -- avoid scanning the entire world with find_nodes_in_area.
+
+    local offsets
+    local normal
+    if opts.plane_only then
+        normal = { x = above.x - under.x, y = above.y - under.y, z = above.z - under.z }
+        if normal.y ~= 0 then
+            offsets = {{1,0,0},{-1,0,0},{0,0,1},{0,0,-1}}
+        elseif normal.x ~= 0 then
+            offsets = {{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}}
+        elseif normal.z ~= 0 then
+            offsets = {{1,0,0},{-1,0,0},{0,1,0},{0,-1,0}}
+        else
+            return
+        end
+    else
+        offsets = {{1,0,0},{-1,0,0},{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}}
+    end
+
+    local visited = {}
+    local queue = {vector.new(under)}
+    local to_replace = {}
+
+    local function hash(p) return p.x..","..p.y..","..p.z end
+
+    while #queue > 0 do
+        local pos = table.remove(queue, 1)
+        local h = hash(pos)
+        if not visited[h] then
+            visited[h] = true
+            local ok = true
+            if opts.predicate then
+                ok = opts.predicate(pos, normal)
+            end
+            if core.get_node(pos).name == clicked and ok then
+                table.insert(to_replace, pos)
+                for _, off in ipairs(offsets) do
+                    table.insert(queue, { x = pos.x + off[1], y = pos.y + off[2], z = pos.z + off[3] })
+                end
+            end
+        end
+    end
+
+    if opts.aux1_mode == "replace_component" and modifier then
+        -- surround the connected component instead of replacing nodes
+        local comp_set = {}
+        for _, p in ipairs(to_replace) do
+            comp_set[p.x..","..p.y..","..p.z] = true
+        end
+        local surround_offsets = {{1,0,0},{-1,0,0},{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}}
+        local placed = {}
+        for _, pos in ipairs(to_replace) do
+            for _, off in ipairs(surround_offsets) do
+                local t = { x = pos.x + off[1], y = pos.y + off[2], z = pos.z + off[3] }
+                local h = t.x..","..t.y..","..t.z
+                if not comp_set[h] and not placed[h] and can_replace(t) then
+                    set_node(t)
+                    placed[h] = true
+                end
+            end
+        end
+    else
+        for _, pos in ipairs(to_replace) do
+            if opts.aux1_mode == "place_face" and modifier and normal then
+                set_node({ x = pos.x + normal.x, y = pos.y + normal.y, z = pos.z + normal.z })
+            else
+                set_node(pos)
+            end
+        end
+    end
+end
+
 local function register_mtpaint_range_tool(def)
     local function wrapper(itemstack, user, pointed_thing, slot)
         if pointed_thing.type ~= "node" then return end
@@ -116,6 +198,17 @@ register_mtpaint_point_tool({
     end
 })
 
+-- 3D Flood Fill (additive): aux1 = global replace; otherwise 6-neighbor connected fill
+register_mtpaint_point_tool({
+    name = "additive_fill",
+    description = "3D Flood Fill",
+    inventory_image = "paint_fill.png",
+    action = function(set_node, pointed_thing, user, right_click)
+        -- aux1 now replaces the entire connected component instead of scanning the whole world
+        perform_fill(set_node, pointed_thing, user, { plane_only = false, aux1_mode = "replace_component" })
+    end
+})
+
 register_mtpaint_point_tool({
     name = "pencil",
     description = "Pencil",
@@ -153,75 +246,12 @@ register_mtpaint_point_tool({
     description = "Flood Fill",
     inventory_image = "paint_fill.png",
     action = function(set_node, pointed_thing, user)
-        local under = pointed_thing.under
-        local above = pointed_thing.above
-        local modifier = user:get_player_control().aux1
-
-        local clicked = core.get_node(under).name
-        if clicked == "ignore" then return end
-
-        local normal = {
-            x = above.x - under.x,
-            y = above.y - under.y,
-            z = above.z - under.z
-        }
-
-        local offsets
-        if normal.y ~= 0 then
-            offsets = {{1,0,0},{-1,0,0},{0,0,1},{0,0,-1}}
-        elseif normal.x ~= 0 then
-            offsets = {{0,1,0},{0,-1,0},{0,0,1},{0,0,-1}}
-        elseif normal.z ~= 0 then
-            offsets = {{1,0,0},{-1,0,0},{0,1,0},{0,-1,0}}
-        else
-            return
-        end
-
-        local visited, queue, to_replace = {}, {vector.new(under)}, {}
-
-        local function hash(p)
-            return p.x..","..p.y..","..p.z
-        end
-
-        local function face_exposed(pos)
-            local neighbor = {
-                x = pos.x + normal.x,
-                y = pos.y + normal.y,
-                z = pos.z + normal.z
-            }
+        local predicate = function(pos, normal)
+            if not normal then return false end
+            local neighbor = { x = pos.x + normal.x, y = pos.y + normal.y, z = pos.z + normal.z }
             return can_replace(neighbor)
         end
-
-        while #queue > 0 do
-            local pos = table.remove(queue, 1)
-            local h = hash(pos)
-
-            if not visited[h] then
-                visited[h] = true
-                if core.get_node(pos).name == clicked and face_exposed(pos) then
-                    table.insert(to_replace, pos)
-                    for _, off in ipairs(offsets) do
-                        table.insert(queue, {
-                            x = pos.x + off[1],
-                            y = pos.y + off[2],
-                            z = pos.z + off[3]
-                        })
-                    end
-                end
-            end
-        end
-
-        for _, pos in ipairs(to_replace) do
-            if modifier then
-                set_node({
-                    x = pos.x + normal.x,
-                    y = pos.y + normal.y,
-                    z = pos.z + normal.z
-                })
-            else
-                set_node(pos)
-            end
-        end
+        perform_fill(set_node, pointed_thing, user, { plane_only = true, predicate = predicate, aux1_mode = "place_face" })
     end
 })
 
