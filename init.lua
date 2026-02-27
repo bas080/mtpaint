@@ -11,6 +11,8 @@ core.register_alias("box_outline", "mtpaint:box_outline")
 core.register_alias("ellipsoid_fill", "mtpaint:ellipsoid_fill")
 core.register_alias("line", "mtpaint:line")
 
+local S = core.get_translator and core.get_translator("mtpaint") or function(s) return s end
+
 local function get_replacer(user, slot)
     slot = slot or 1
     local inv = user:get_inventory()
@@ -68,7 +70,7 @@ local function register_mtpaint_range_tool(def)
     end
 
     core.register_tool("mtpaint:"..def.name, {
-        description = def.description,
+        description = S(def.description or def.name),
         inventory_image = def.inventory_image,
         on_use = function(itemstack, user, pointed_thing)
             return wrapper(itemstack, user, pointed_thing, 1)
@@ -91,7 +93,7 @@ local function register_mtpaint_point_tool(def)
 
     end
     core.register_tool("mtpaint:"..def.name, {
-        description = def.description or def.name,
+        description = S(def.description or def.name),
         inventory_image = def.inventory_image or "",
         on_use = function(itemstack, user, pointed_thing)
             return wrapper(itemstack, user, pointed_thing, false, 1)
