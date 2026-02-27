@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+
+msgid "Eraser"
+msgstr "Eraser"
+
+msgid "3D Flood Fill"
+msgstr "3D Flood Fill"
+
+msgid "Pencil"
+msgstr "Pencil"
+
+msgid "Picker"
+msgstr "Picker"
+
+msgid "Flood Fill"
+msgstr "Flood Fill"
+
+msgid "Filled Box"
+msgstr "Filled Box"
+
+msgid "Filled Ellipsoid"
+msgstr "Filled Ellipsoid"
+
+msgid "Line"
+msgstr "Line"
+
+msgid "Box Outline"
+msgstr "Box Outline"
