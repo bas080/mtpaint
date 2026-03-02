@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.0 2026-03-02
+## 0.0.0 - 2026-03-02
 
 - 3D block-based painting tools for Minetest-style worlds
 - Primary / secondary placement
