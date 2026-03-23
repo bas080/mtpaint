@@ -7,52 +7,53 @@ Image editor-style world editing for Minetest.
 ## Features
 
 * **Primary / Secondary nodes**
-
   * Left click uses inventory slot 1
   * Right click uses inventory slot 2
 
-* **Face-aware placement**
 
+* **Face-aware placement**
   * Click replaces the targeted node
   * `Aux1` + click places on the clicked face instead
 
-* **Pencil**
 
+* **Pencil**
   * Places or replaces a single block
 
-* **Eraser**
 
+* **Eraser**
   * Removes the highlighted block
 
-* **Picker**
 
+* **Picker**
   * Copies the highlighted block into the active slot
 
-* **Flood Fill**
 
+* **Flood Fill**
   * Fills connected blocks on the clicked face
 
-* **3D Flood Fill / Additive Fill**
 
+* **3D Flood Fill / Additive Fill**
   * Fills a six‑connected component of identical nodes in true 3D space. Click to replace a block and all connected neighbors; use the `aux1` modifier to surround the region with a one‑node thick shell (nodes are placed on top of the replaced component). This tool is not restricted to a plane and therefore differs from the regular flood fill, which only affects the face you click and works by placing nodes on adjacent faces.
 
-* **Filled Box**
 
+* **Filled Box**
   * 2-corner selection volume fill
 
-* **Box Outline**
 
+* **Box Outline**
   * 2-corner selection edges only
 
-* **Filled Ellipsoid**
 
+* **Filled Ellipsoid**
   * 2-corner selection ellipsoid volume
 
-* **Line**
 
+* **Line**
   * Draws a 3D line between two selected points
 
+
 ---
+
 
 ## Usage
 
@@ -85,6 +86,12 @@ The following shortcuts are available for use with `/giveme <alias>`
 * `colorpicker`
 * `nodepicker`
 
-See [`experiment branch`][experiment_branch] for other ideas
+See [`experiment branch`][experiment_branch] for other ideas.
 
 [experiment_branch]:https://github.com/bas080/mtpaint/tree/experiment
+
+## Donate
+
+If you enjoy my work, you can support me here: [💖 Donate](https://liberapay.com/bas080)
+
+Thank you for helping me keep modding and sharing fun with everyone!
