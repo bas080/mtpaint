@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1
+
+- Some maintenance changes.
+
 ## 0.0.0 - 2026-03-02
 
 - 3D block-based painting tools for Minetest-style worlds
