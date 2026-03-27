@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.3
+
+- Remove conflicting bucket alias.
+- Fix broken english .po file.
+
+## 0.0.2
+
+- Project maintenance
+
 ## 0.0.1
 
 - Some maintenance changes.
