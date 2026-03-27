@@ -1,6 +1,5 @@
 core.register_alias("pencil", "mtpaint:pencil")
-core.register_alias("flood_fill", "mtpaint:flood_fill")
-core.register_alias("bucket", "mtpaint:flood_fill")
+core.register_alias("fill", "mtpaint:flood_fill")
 core.register_alias("eraser", "mtpaint:eraser")
 core.register_alias("gum", "mtpaint:eraser")
 core.register_alias("picker", "mtpaint:picker")

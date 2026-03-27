@@ -79,7 +79,6 @@ The following shortcuts are available for use with `/giveme <alias>`
 
 * `pencil`
 * `fill`
-* `bucket`
 * `eraser`
 * `gum`
 * `picker`
